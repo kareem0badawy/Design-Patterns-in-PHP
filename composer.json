@@ -1,0 +1,10 @@
+{
+    "name": "kareem/design-patterns-in-php",
+    "description": "Design Patterns in PHP to Solve real-life Software Problems\\",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "DesignPatternsinPHP\\" : "src/"
+        }
+    }
+}
