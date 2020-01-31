@@ -1,6 +1,10 @@
 <?php
 
+use DesignPatternsInPHP\Structural\Adapter\PayPal;
+use DesignPatternsInPHP\Structural\Adapter\Stripe;
 use DesignPatternsInPHP\Structural\Decorator\Parcel;
+use DesignPatternsInPHP\Structural\Adapter\PayPalAdapter;
+use DesignPatternsInPHP\Structural\Adapter\StripeAdapter;
 use DesignPatternsInPHP\Structural\Decorator\InternationalShipping;
  
 require __DIR__ . './../../vendor/autoload.php';
@@ -13,4 +17,15 @@ function decorator()
     echo "{$parcel->getDescription()} for \${$parcel->calculatePrice()}.";
 }
 
-decorator();
+// decorator();
+
+function adapter()
+{
+    $payPal = new PayPalAdapter(new PayPal());
+    echo $payPal->pay(10);
+
+    $stripe = new StripeAdapter(new Stripe());
+    echo $stripe->pay(10);
+}
+
+adapter();
