@@ -1,5 +1,6 @@
 <?php
 
+use DesignPatternsInPHP\Creational\Prototype\ChampionPrototype;
 use DesignPatternsInPHP\Creational\SimpleFactory\VehicleFactory;
 use DesignPatternsInPHP\Creational\AbstractFactory\ParserFactory;
 use DesignPatternsInPHP\Creational\FactoryMethod\SystemLogFactory;
@@ -51,4 +52,43 @@ function factoryMethod() {
     $emailLogger = ElectronicLogFactory::getNotifier('Email', 'john@doe.com');
     echo $emailLogger->log('Undefined function');
 }
-factoryMethod();
+// factoryMethod();
+
+function prototype()
+{
+    $champions = [
+        (object)[
+            'name' => 'Irelia',
+            'att' => 150,
+            'def' => 2000
+        ],
+
+        (object)[
+            'name' => 'Akali',
+            'att' => 200,
+            'def' => 1500
+        ],
+
+        (object)[
+            'name' => 'Tristana',
+            'att' => 250,
+            'def' => 1000
+        ]
+    ];
+
+    $championPrototype = new ChampionPrototype();
+
+    $gameData = [];
+
+    foreach ($champions as $champion) {
+        $prototype = clone($championPrototype);
+        $prototype->setName($champion->name);
+        $prototype->setAtt($champion->att);
+        $prototype->setDef($champion->def);
+
+        $gameData['champions'][] = $prototype;
+    }
+    print_r($gameData);
+}
+
+prototype();
