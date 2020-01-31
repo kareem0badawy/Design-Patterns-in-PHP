@@ -1,7 +1,11 @@
 <?php
 
+use DesignPatternsInPHP\Structural\Facade\Share;
+use DesignPatternsInPHP\Structural\Facade\Devlob;
 use DesignPatternsInPHP\Structural\Adapter\PayPal;
 use DesignPatternsInPHP\Structural\Adapter\Stripe;
+use DesignPatternsInPHP\Structural\Facade\Twitter;
+use DesignPatternsInPHP\Structural\Facade\Facebook;
 use DesignPatternsInPHP\Structural\Decorator\Parcel;
 use DesignPatternsInPHP\Structural\Adapter\PayPalAdapter;
 use DesignPatternsInPHP\Structural\Adapter\StripeAdapter;
@@ -28,4 +32,16 @@ function adapter()
     echo $stripe->pay(10);
 }
 
-adapter();
+// adapter();
+
+function facade()
+{
+    $message = 'New video is here!';
+
+    $facebook = new Facebook($message);
+    $twitter = new Twitter($message);
+
+    Share::to($facebook, $twitter, null);
+}
+
+facade();
