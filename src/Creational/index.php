@@ -1,6 +1,7 @@
 <?php
 
 use DesignPatternsInPHP\Creational\AbstractFactory\ParserFactory;
+use DesignPatternsInPHP\Creational\SimpleFactory\VehicleFactory;
 
 
 require __DIR__ . './../../vendor/autoload.php';
@@ -23,4 +24,17 @@ function abstractFactory()
 
     print_r($xmlParser->parse('<?xml version="1.0" encoding="UTF-8"?><note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don\'t forget me this weekend!</body></note>'));
 }
-abstractFactory();
+// abstractFactory();
+
+function simpleFactory() {
+    $luxurious = VehicleFactory::getVehicle('Luxurious');
+    echo $luxurious->call() . '<br>';
+
+    $lowCost = VehicleFactory::getVehicle('Low-Cost');
+    echo $lowCost->call() . '<br>';
+
+    // $doesNotExist = VehicleFactory::getVehicle('Airplane');
+    // echo $doesNotExist->call() . '<br>';
+}
+
+simpleFactory();
