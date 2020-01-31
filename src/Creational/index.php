@@ -1,5 +1,7 @@
 <?php
 
+use DesignPatternsInPHP\Creational\Builder\ProductQuery;
+use DesignPatternsInPHP\Creational\Builder\MySQLQueryBuilder;
 use DesignPatternsInPHP\Creational\Prototype\ChampionPrototype;
 use DesignPatternsInPHP\Creational\SimpleFactory\VehicleFactory;
 use DesignPatternsInPHP\Creational\AbstractFactory\ParserFactory;
@@ -91,4 +93,19 @@ function prototype()
     print_r($gameData);
 }
 
-prototype();
+// prototype();
+
+function builder()
+{
+    // echo (new MySQLQueryBuilder())
+    //     ->select('price', 'name', 'quantity')
+    //     ->from('products')
+    //     ->where('price', '>', 0)
+    //     ->where('quantity', '>', 100)
+    //     ->rawSql();
+
+    echo (new ProductQuery)->getProducts(100);
+}
+
+
+builder();
