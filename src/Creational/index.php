@@ -1,7 +1,9 @@
 <?php
 
-use DesignPatternsInPHP\Creational\AbstractFactory\ParserFactory;
 use DesignPatternsInPHP\Creational\SimpleFactory\VehicleFactory;
+use DesignPatternsInPHP\Creational\AbstractFactory\ParserFactory;
+use DesignPatternsInPHP\Creational\FactoryMethod\SystemLogFactory;
+use DesignPatternsInPHP\Creational\FactoryMethod\ElectronicLogFactory;
 
 
 require __DIR__ . './../../vendor/autoload.php';
@@ -33,8 +35,20 @@ function simpleFactory() {
     $lowCost = VehicleFactory::getVehicle('Low-Cost');
     echo $lowCost->call() . '<br>';
 
-    // $doesNotExist = VehicleFactory::getVehicle('Airplane');
-    // echo $doesNotExist->call() . '<br>';
+    $doesNotExist = VehicleFactory::getVehicle('Airplane');
+    echo $doesNotExist->call() . '<br>';
 }
 
-simpleFactory();
+// simpleFactory();
+
+function factoryMethod() {
+    $fileLogger = SystemLogFactory::getNotifier('File', 'FactoryMethod/errors/errors.txt');
+    echo $fileLogger->log('Log error successfuly') . '<br>';
+
+    $smsLogger = ElectronicLogFactory::getNotifier('SMS', '0691234567');
+    echo $smsLogger->log('Another error') . '<br>';
+
+    $emailLogger = ElectronicLogFactory::getNotifier('Email', 'john@doe.com');
+    echo $emailLogger->log('Undefined function');
+}
+factoryMethod();
