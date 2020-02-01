@@ -1,14 +1,18 @@
 <?php
 
 use DesignPatternsInPHP\Structural\Facade\Share;
-use DesignPatternsInPHP\Structural\Facade\Devlob;
+use DesignPatternsInPHP\Structural\Proxy\LabDoor;
 use DesignPatternsInPHP\Structural\Adapter\PayPal;
 use DesignPatternsInPHP\Structural\Adapter\Stripe;
 use DesignPatternsInPHP\Structural\Facade\Twitter;
 use DesignPatternsInPHP\Structural\Facade\Facebook;
 use DesignPatternsInPHP\Structural\Decorator\Parcel;
+use DesignPatternsInPHP\Structural\Proxy\SecuredDoor;
+use DesignPatternsInPHP\Structural\Composite\Designer;
+use DesignPatternsInPHP\Structural\Composite\Developer;
 use DesignPatternsInPHP\Structural\Adapter\PayPalAdapter;
 use DesignPatternsInPHP\Structural\Adapter\StripeAdapter;
+use DesignPatternsInPHP\Structural\Composite\Organization;
 use DesignPatternsInPHP\Structural\Facade\anotherOne\Computer;
 use DesignPatternsInPHP\Structural\Decorator\InternationalShipping;
 use DesignPatternsInPHP\Structural\Facade\anotherOne\ComputerFacade;
@@ -59,6 +63,38 @@ function turnOnAndOfComputer()
     $computer->turnOff(); // Bup bup buzzz! Haah! Zzzzz
 }
 
-turnOnAndOfComputer();
+// turnOnAndOfComputer();
 
 /*********************************End Facade************************************ */
+
+
+/*********************************Begin Proxy************************************ */
+/**
+ * Proxy Pattern as layer on code
+ */
+function proxy(){
+    $door = new SecuredDoor(new LabDoor());
+    $door->open('invalid'); // Big no! It ain't possible. because password incorrect
+    echo '<br>';
+    $door->open('$ecr@t'); // Opening lab door
+    $door->close(); // Closing lab door
+}
+// proxy();
+/*********************************End Proxy************************************ */
+
+/********************************* Begin Composite ************************************ */
+function composite(){
+
+// Prepare the employees
+$john = new Developer('John Doe', 12000);
+$jane = new Designer('Jane Doe', 15000);
+
+// Add them to organization
+$organization = new Organization();
+$organization->addEmployee($john);
+$organization->addEmployee($jane);
+
+echo "Net salaries: " . $organization->getNetSalaries(); // Net Salaries: 27000
+}
+composite();
+/********************************* End Composite ************************************ */
