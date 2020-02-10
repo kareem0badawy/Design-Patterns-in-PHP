@@ -16,8 +16,15 @@ use DesignPatternsInPHP\Structural\Composite\Organization;
 use DesignPatternsInPHP\Structural\Facade\anotherOne\Computer;
 use DesignPatternsInPHP\Structural\Decorator\InternationalShipping;
 use DesignPatternsInPHP\Structural\Facade\anotherOne\ComputerFacade;
+use DesignPatternsInPHP\Structural\Decorator\WebsiteExample\BaseWebsite;
+use DesignPatternsInPHP\Structural\Decorator\WebsiteExample\ContactForm;
+use DesignPatternsInPHP\Structural\Decorator\WebsiteExample\YearHosting;
+use DesignPatternsInPHP\Structural\Decorator\WebsiteExample\CustomDesign;
+use DesignPatternsInPHP\Structural\Decorator\WebsiteExample\WebsiteSecure;
+use DesignPatternsInPHP\Structural\Decorator\WebsiteExample\WordPressBlog;
  
 require __DIR__ . './../../vendor/autoload.php';
+/*********************************Begin Decorator************************************ */
 
 function decorator()
 {
@@ -29,6 +36,33 @@ function decorator()
 
 // decorator();
 
+function WebSiteDecorator()
+{
+    // basic website:
+    // Let's see the price / desc of the basic website. This is just like a normal bit of code:
+    echo "=== BASIC WEBSITE === <br>";
+    $basic_website = new BaseWebsite();
+    echo "Cost: " . $basic_website->getPrice() . " <br>";
+    echo "Description of all included services:  <br>" . $basic_website->getDescription() . " <br>";
+    
+    // but now, let's say we want to get the price of a website with a custom design. Here is how we can get it all working:
+    echo "=== BASIC WEBSITE + CUSTOM DESIGN + Website Secure === <br>";
+    
+    $basic_and_custom_design = new WebsiteSecure(new CustomDesign(new BaseWebsite()));
+    echo "Cost: " . $basic_and_custom_design->getPrice() . " <br>";
+    echo "Description of all included services:  <br>" . $basic_and_custom_design->getDescription() . " <br>";
+    
+    echo "=== BASIC WEBSITE + CUSTOM DESIGN + WP + CONTACT FORM + HOSTING FOR A YEAR === <br>";
+    
+    $basic_and_custom_design = new YearHosting(new ContactForm(new WordPressBlog(new CustomDesign(new BaseWebsite()))));
+    echo "Cost: " . $basic_and_custom_design->getPrice() . " <br>";
+    echo "Description of all included services:  <br>" . $basic_and_custom_design->getDescription() . " <br>";
+}
+WebSiteDecorator();
+/*********************************Begin Decorator************************************ */
+
+/*********************************Begin adapter************************************ */
+
 function adapter()
 {
     $payPal = new PayPalAdapter(new PayPal());
@@ -39,6 +73,7 @@ function adapter()
 }
 
 // adapter();
+/*********************************Begin adapter************************************ */
 
 
 /*********************************Begin Facade************************************ */
@@ -96,5 +131,5 @@ $organization->addEmployee($jane);
 
 echo "Net salaries: " . $organization->getNetSalaries(); // Net Salaries: 27000
 }
-composite();
+// composite();
 /********************************* End Composite ************************************ */
